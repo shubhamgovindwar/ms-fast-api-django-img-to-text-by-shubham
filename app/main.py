@@ -1,0 +1,22 @@
+import json
+import pathlib
+from fastapi import FastAPI,Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+
+BASE_DIR = pathlib.Path(__file__).parent
+
+templates = Jinja2Templates(directory=str(BASE_DIR/"templates"))
+
+app = FastAPI()
+# restAPI app-> app  ios web app any two apps
+
+@app.get("/",response_class=HTMLResponse)# http GET
+def home_view(request: Request):
+    print(request)
+    return templates.TemplateResponse("home.html",{"request":request,"123":"abc"})
+
+@app.post("/")# http POST
+def home_detail_view():
+    return {"hello":"World"}
